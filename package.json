@@ -1,0 +1,36 @@
+{
+  "name": "safecitizen",
+  "version": "1.0.0",
+  "description": "Unsafe area alert system.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/D3Crypt3r15/safeCitizen.git"
+  },
+  "author": "Al3x D3v",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/D3Crypt3r15/safeCitizen/issues"
+  },
+  "homepage": "https://github.com/D3Crypt3r15/safeCitizen#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "exceljs": "^4.3.0",
+    "express": "^4.18.2",
+    "helmet": "^6.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongodb": "^4.11.0",
+    "mongoose": "^6.7.2",
+    "mustache": "^4.2.0",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.8.0",
+    "socket.io": "^4.5.3",
+    "validator": "^13.7.0"
+  }
+}
