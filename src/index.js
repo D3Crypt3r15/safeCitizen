@@ -1,4 +1,5 @@
 const fs=require('fs');
+const path=require('path');
 const express=require('express');
 const app=express();
 
@@ -27,9 +28,19 @@ const Report=require('../src/models/report');
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use('/static', express.static('./assets'));
+app.use('/css', express.static('./assets/css'));
+app.use('/js', express.static('./assets/js'));
+app.use('/fonts', express.static('./assets/fonts'));
+app.use('/img', express.static('./assets/img'));
+app.use('/favico.icon', express.static('./assets/favicon.ico'));
+
 app.use(cors());
 app.use(userRouter);
 app.use(reportRouter);
+
+app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '/templates/index.html'));
+});
 
 io.use(async (socket, next)=>{
     const token=socket.handshake.auth.token;
