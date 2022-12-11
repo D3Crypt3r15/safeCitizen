@@ -32,7 +32,7 @@ app.use('/css', express.static('./assets/css'));
 app.use('/js', express.static('./assets/js'));
 app.use('/fonts', express.static('./assets/fonts'));
 app.use('/img', express.static('./assets/img'));
-app.use('/favico.icon', express.static('./assets/favicon.ico'));
+app.use('/favicon.ico', express.static('./assets/favicon.ico'));
 
 app.use(cors());
 app.use(userRouter);
