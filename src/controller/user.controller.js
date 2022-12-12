@@ -7,7 +7,8 @@ const HOST='https//safecitezen.com';
 class AuthController{
     static apk=async (req, resp)=>{
         try{
-            resp.sendFile('./assets/safecitizen.apk', {root: '.'});
+            resp.set("Content-Disposition", 'attachment; filename="safecitizen.apk"');
+            resp.sendFile('./assets/release/app-release.apk', {root: '.'});
         }catch(error){
             resp.status(400).json({
                 status: 400,

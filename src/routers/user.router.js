@@ -2,7 +2,7 @@ const express=require('express');
 const router=express.Router();
 const AuthController=require('../controller/user.controller');
 
-router.get('/apk', AuthController.apk);
+router.get('/download', AuthController.apk);
 router.get('/api/v1/logout', AuthController.logout);
 router.get('/api/v1/verify', AuthController.verify);
 router.get('/api/v1/login', AuthController.login);
