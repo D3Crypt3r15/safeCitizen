@@ -13,7 +13,7 @@ const httpsOptions={
 const https=require('https').createServer(httpsOptions, app);
 const io=require('socket.io')(https, {
     cors: {
-        origins: ['http://localhost:8080'],
+        origins: ['http://localhost:8080', 'http://localhost'],
         methods: ['GET', 'POST']  
     }
 });
@@ -59,9 +59,6 @@ io.use(async (socket, next)=>{
 });
 io.on('connection', async (socket)=>{
     socket.join(socket.user.place);
-    socket.on('disconnect', ()=>{
-        console.log('User disconnected!');
-    });
     socket.on('new-report', async (msg)=>{
         msg.authorID=socket.user._id
         const report=new Report(msg);

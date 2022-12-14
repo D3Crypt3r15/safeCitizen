@@ -1,7 +1,6 @@
 const {User}=require('../models/user');
 const Report=require('../models/report');
 const Excel=require('exceljs');
-const { count } = require('../models/report');
 
 class ReportController{
     static create=async (req, resp)=>{
@@ -39,7 +38,7 @@ class ReportController{
             var reports=[];
             var reports2=[];
             if (lng && lat){
-                const HOST='http://192.168.43.253:8000';
+                const HOST='https://safecitezen.com';
                 reports=await Report.find({"$position.lng": lng, "position.lat": lat}, {position: 0}, {sort: '-createAt'});
 
                 for (let index in reports){
@@ -47,7 +46,7 @@ class ReportController{
                         reports[index].photo=HOST + '/static/sin_imagen.jpg';
                     }
                 }
-            }else if (locality && !count){
+            }else if (locality && !COUNT){
                 reports=await Report.aggregate([
                     {$match: {locality: locality}},
                     {$group: {_id: {position: "$position", address: "$address"}}},
@@ -90,9 +89,10 @@ class ReportController{
                 const workSheet=workBook.addWorksheet('Reportes', {properties:{tabColor:{argb:'FFC0000'}}});
                 workSheet.columns = [
                     { header: 'Autor', key: 'author', width: 25},
-                    { header: 'Descripcion', key: 'description', width: 20},
+                    { header: 'Descripcion', key: 'description', width: 30},
                     { header: 'Categoria', key: 'category', width: 14},
-                    { header: 'Direccion', key: 'address', width: 20},
+                    {header: 'Coordenadas', key: 'position', width: 15},
+                    { header: 'Direccion', key: 'address', width: 25},
                     { header: 'Ciudad', key: 'locality', width: 10},
                     { header: 'Fecha', key: 'createAt', width: 10}
                 ];
