@@ -3,7 +3,7 @@ const sendMail=require('../services/send.mail');
 const fetch=require('node-fetch');
 
 const API_TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjEyMjE1MTFAc2VuYXRpLnBlIn0.wysyDhNoCsw7oYKtKiPL43kjF3iZtCWmMrOzZ8PaOkw";
-const HOST='https//safecitezen.com';
+const HOST='https://safecitezen.com';
 class AuthController{
     static apk=async (req, resp)=>{
         try{
@@ -24,6 +24,7 @@ class AuthController{
             user.settings=user2.settings;
             user.place=user2.place;
             user.role=user2.role;
+            user.avatar=user2.avatar;
 
             resp.status(200).json({
                 status: 200,
@@ -263,10 +264,10 @@ class AuthController{
             const token=req.body.token;
             const newSettings=req.body.newSettings;
             const newPlace=req.body.place;
+            const newAvatar=req.body.avatar;
             const user=await User.verifyAuthToken(token);
 
-            await User.findByIdAndUpdate(user._id, {place: newPlace, settings: newSettings});
-            
+            await User.findByIdAndUpdate(user._id, {avatar: newAvatar, place: newPlace, settings: newSettings});
             resp.status(200).json({
                 status: 200,
                 message: 'Configuracion Actualizada.',

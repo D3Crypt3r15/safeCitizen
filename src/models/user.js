@@ -14,8 +14,7 @@ function check(token){
 
 const UserSchema=mongoose.Schema({
     avatar:{
-        type: String,
-        default: '/static/avatar/avatar.png'
+        type: String
     },
     username: {
         type: String,
@@ -26,6 +25,10 @@ const UserSchema=mongoose.Schema({
     place: {
         type: String,
         required: [true, 'Ubicacion no encontrada. Intentalo mas tarde.'],
+    },
+    gender: {
+        type: String,
+        required: [true, 'Por favor, ingrese el su genero.'],
     },
     email:{
         type: String,
@@ -87,6 +90,11 @@ const UserSchema=mongoose.Schema({
 
 UserSchema.pre('save', async function(next){
     const user=this;
+    if (user.gender.toLowerCase() === 'hombre'){
+        user.avatar='/static/avatar/avatar.png';
+    }else{
+        user.avatar='/static/avatar/avatar2.png';
+    }
     if (user.isModified('password')){
         user.password=await bcrypt.hash(user.password, 8);
     }

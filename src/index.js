@@ -25,8 +25,8 @@ const reportRouter=require('../src/routers/report.router');
 const User=require('../src/models/user').User;
 const Report=require('../src/models/report');
 
-app.use(express.urlencoded({extended: false}));
-app.use(express.json());
+app.use(express.urlencoded({extended: false, limit: '50mb'}));
+app.use(express.json({limit: '50mb'}));
 app.use('/static', express.static('./assets'));
 app.use('/css', express.static('./assets/css'));
 app.use('/js', express.static('./assets/js'));
@@ -38,7 +38,7 @@ app.use(cors());
 app.use(userRouter);
 app.use(reportRouter);
 
-app.get('/', function(req, res) {
+app.get('(/|/save/*|/recover/*)', function(req, res) {
     res.sendFile(path.join(__dirname, '/templates/index.html'));
 });
 

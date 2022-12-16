@@ -1,7 +1,7 @@
 const nodemailer=require('nodemailer');
 
-const USER='alexfarfam5@gmail.com';
-const PASS='pqrsmmdkggteanso';
+const USER='sheylaanaytalvaradocampos@gmail.com';
+const PASS='rceaanuzumpuoajl';
 
 function send(to, subject, msg){
     try{    
