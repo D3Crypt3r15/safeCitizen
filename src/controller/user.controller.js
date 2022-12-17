@@ -5,7 +5,7 @@ const fetch=require('node-fetch');
 const API_TOKEN="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6IjEyMjE1MTFAc2VuYXRpLnBlIn0.wysyDhNoCsw7oYKtKiPL43kjF3iZtCWmMrOzZ8PaOkw";
 const HOST='https://safecitezen.com';
 class AuthController{
-    static apk=async (req, resp)=>{
+    static download=async (req, resp)=>{
         try{
             resp.set("Content-Disposition", 'attachment; filename="safecitizen.apk"');
             resp.sendFile('./assets/release/app-release.apk', {root: '.'});

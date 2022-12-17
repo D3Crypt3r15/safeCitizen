@@ -1,6 +1,7 @@
 const fs=require('fs');
 const path=require('path');
 const express=require('express');
+const multer=require('multer');
 const app=express();
 
 const httpsOptions={
@@ -17,6 +18,15 @@ const io=require('socket.io')(https, {
         methods: ['GET', 'POST']  
     }
 });
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, path.join(__dirname, '/assets/uploads/'));
+    },
+    filename: function (req, file, cb) {
+      cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
+    }
+  })
+const upload=multer({storage: storage});
 const cors=require('cors');
 
 require('./db/mongoose');
@@ -41,6 +51,15 @@ app.use(reportRouter);
 app.get('(/|/save/*|/recover/*)', function(req, res) {
     res.sendFile(path.join(__dirname, '/templates/index.html'));
 });
+app.post('/upload', upload.single("image"), function (req,resp) {
+    resp.status(200).json({
+        status: 200,
+        message: 'Upload!',
+        data:{
+            path: '/static/uploads/'+req.file.filename
+        }
+    });
+})
 
 io.use(async (socket, next)=>{
     const token=socket.handshake.auth.token;
@@ -59,6 +78,7 @@ io.use(async (socket, next)=>{
 });
 io.on('connection', async (socket)=>{
     socket.join(socket.user.place);
+
     socket.on('new-report', async (msg)=>{
         msg.authorID=socket.user._id
         const report=new Report(msg);

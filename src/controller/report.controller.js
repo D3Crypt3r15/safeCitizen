@@ -27,6 +27,7 @@ class ReportController{
     }
     static read=async (req, resp)=>{
         try{
+            const HOST='https://safecitezen.com';
             const token=req.query.token;
             const locality=req.query.locality;
             const lng=req.query.lng;
@@ -37,8 +38,7 @@ class ReportController{
 
             var reports=[];
             var reports2=[];
-            if (lng && lat){
-                const HOST='https://safecitezen.com';
+            if (lng && lat){              
                 reports=await Report.find({"$position.lng": lng, "position.lat": lat}, {position: 0}, {sort: '-createAt'});
 
                 for (let index in reports){
@@ -66,6 +66,11 @@ class ReportController{
                         ]);
                     }else{
                         reports=await Report.find({}, {}, {sort: '-createAt'});
+                        for (let index in reports){
+                            if(reports[index].photo.trim() === ''){
+                                reports[index].photo=HOST + '/static/sin_imagen.jpg';
+                            }
+                        }
                     }                    
                 }
             }
@@ -91,8 +96,7 @@ class ReportController{
                     { header: 'Autor', key: 'author', width: 25},
                     { header: 'Descripcion', key: 'description', width: 30},
                     { header: 'Categoria', key: 'category', width: 14},
-                    {header: 'Coordenadas', key: 'position', width: 15},
-                    { header: 'Direccion', key: 'address', width: 25},
+                    { header: 'Coordenadas', key: 'position', width: 15},
                     { header: 'Ciudad', key: 'locality', width: 10},
                     { header: 'Fecha', key: 'createAt', width: 10}
                 ];
